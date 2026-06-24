@@ -1,0 +1,32 @@
+'use client';
+import { LiFiWidget, type WidgetConfig } from '@lifi/widget';
+
+const config: WidgetConfig = {
+  integrator: 'YourBrand',           // register with LI.FI
+  fee: 0.005,                        // 0.5% integrator fee
+  appearance: 'auto',
+  variant: 'wide',
+  routePriority: 'CHEAPEST',
+  chains: { allow: [1, 137, 42161, 10, 8453] }, // mainnet, polygon, arbitrum, optimism, base
+  tokens: {
+    featured: {
+      '1': ['0xC02aaa39b223...'],   // WETH
+      '137': ['0x2791Bca1f2de...']  // USDC.e example
+    }
+  },
+  // You can pass private RPCs, slippage, bridge/exchange allow/deny, etc.
+  sdkConfig: { /* your rpc / slippage / order settings */ },
+  theme: {
+    palette: {
+      primary: { main: '#7C3AED' },
+      secondary: { main: '#22D3EE' },
+      background: { default: '#0B0B12', paper: '#12121C' },
+    },
+    shape: { borderRadius: 16 },
+    typography: { fontFamily: 'Inter, ui-sans-serif, system-ui' }
+  }
+};
+
+export default function SwapWidget() {
+  return <LiFiWidget config={config} />;
+}
