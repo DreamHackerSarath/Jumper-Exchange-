@@ -1,0 +1,19 @@
+function FeeEditor({ current, onSave }) {
+  const [fees, setFees] = useState(current);
+  return (
+    <div className="space-y-2">
+      {Object.keys(fees).map(type => (
+        <input
+          key={type}
+          value={fees[type]}
+          onChange={e => setFees({...fees, [type]: Number(e.target.value)})}
+          className="border p-2 rounded"
+          placeholder={`${type} fee BPS`}
+        />
+      ))}
+      <button onClick={() => onSave(fees)} className="bg-brand text-white px-3 py-1 rounded">
+        Save
+      </button>
+    </div>
+  );
+}
