@@ -1,0 +1,15 @@
+import SwapWidget from '@/components/SwapWidget';
+export default function Home() {
+  return (
+    <main className="min-h-screen mx-auto max-w-5xl p-4 space-y-6">
+      <header className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img src="/logo.svg" className="h-8" alt="logo" />
+          <h1 className="text-xl font-semibold">YourExchange</h1>
+        </div>
+        <w3m-button /> {/* or RainbowKitConnectButton if you prefer */}
+      </header>
+      <SwapWidget />
+    </main>
+  );
+}
