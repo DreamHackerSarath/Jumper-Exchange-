@@ -1,0 +1,15 @@
+model AdminConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  updatedAt   DateTime @updatedAt
+}
+
+model BlockedRoute {
+  id          String   @id @default(cuid())
+  chainId     Int
+  bridge      String
+  dex         String?
+  reason      String?
+  createdAt   DateTime @default(now())
+}
