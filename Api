@@ -1,0 +1,13 @@
+API Endpoints
+GET /api/admin/config
+POST /api/admin/config (auth-protected)
+GET /api/admin/routes/blocked
+POST /api/admin/routes/block
+DELETE /api/admin/routes/block/:id
+
+Use JWT-based admin auth or connect to your wallet + on-chain signature verification.
+
+4) Frontend (Next.js + Tailwind)
+Separate /admin route guarded by auth.
+Tabs: Fees, Policies, Referrals, Assets.
+Reuse UI components from user-facing site for consistency.
