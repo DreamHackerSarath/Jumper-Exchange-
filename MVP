@@ -1,0 +1,14 @@
+jumper-like/
+  app/
+    page.tsx
+    layout.tsx
+  components/
+    SwapWidget.tsx
+    Wallet.tsx
+  lib/
+    chains.ts
+    theme.ts
+  public/
+    logo.svg
+  package.json
+  README.md
