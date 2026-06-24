@@ -1,0 +1,110 @@
+Alright — Step 15 for your Jumper-style build will be the **Admin Panel for Routes, Fees & Policies** so you can manage everything without redeploying code.
+
+---
+
+## 🛠 Step 15 — Admin Panel (Routes, Fees & Policies)
+
+**Goal:** Give admins the ability to tweak platform behavior in real time — control fees, allowed/blocked bridges & DEXs, slippage presets, referral logic, and featured assets.
+
+---
+
+### 1) Core Features
+
+* **Fee Control**
+
+  * Change fee BPS per route type (e.g., stable swaps, volatile swaps, cross-chain swaps).
+  * Different fees per chain if desired.
+* **Route Policy Management**
+
+  * Allow/block specific bridges & DEXs (from Step 7’s policy engine).
+  * Set priority bridges per chain.
+* **Slippage Defaults**
+
+  * Set global and token-specific slippage.
+* **Referral & Leaderboard Settings**
+
+  * Adjust referral % payouts.
+  * Toggle leaderboard visibility.
+* **Featured Assets**
+
+  * Pin specific token pairs on homepage or transfer UI.
+
+---
+
+### 2) DB Schema
+
+Example Prisma additions:
+
+```prisma
+model AdminConfig {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  updatedAt   DateTime @updatedAt
+}
+
+model BlockedRoute {
+  id          String   @id @default(cuid())
+  chainId     Int
+  bridge      String
+  dex         String?
+  reason      String?
+  createdAt   DateTime @default(now())
+}
+```
+
+---
+
+### 3) API Endpoints
+
+* `GET /api/admin/config`
+* `POST /api/admin/config` (auth-protected)
+* `GET /api/admin/routes/blocked`
+* `POST /api/admin/routes/block`
+* `DELETE /api/admin/routes/block/:id`
+
+Use JWT-based admin auth or connect to your wallet + on-chain signature verification.
+
+---
+
+### 4) Frontend (Next.js + Tailwind)
+
+* Separate `/admin` route guarded by auth.
+* Tabs: **Fees**, **Policies**, **Referrals**, **Assets**.
+* Reuse UI components from user-facing site for consistency.
+
+Example component:
+
+```tsx
+function FeeEditor({ current, onSave }) {
+  const [fees, setFees] = useState(current);
+  return (
+    <div className="space-y-2">
+      {Object.keys(fees).map(type => (
+        <input
+          key={type}
+          value={fees[type]}
+          onChange={e => setFees({...fees, [type]: Number(e.target.value)})}
+          className="border p-2 rounded"
+          placeholder={`${type} fee BPS`}
+        />
+      ))}
+      <button onClick={() => onSave(fees)} className="bg-brand text-white px-3 py-1 rounded">
+        Save
+      </button>
+    </div>
+  );
+}
+```
+
+---
+
+### 5) Integration
+
+* Fetch config on app load to override default fee/slippage settings.
+* On update, cache bust & refresh policy filters so user routes reflect new rules instantly.
+
+---
+
+If you want, I can jump straight into **Step 16 — Liquidity Analytics & Volume Dashboard** so your admin panel also has real-time stats on swaps, fees earned, and top tokens.
+Do you want me to proceed?
